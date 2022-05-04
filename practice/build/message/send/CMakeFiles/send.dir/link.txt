@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsend.a  CMakeFiles/send.dir/messagesender.cpp.o
+/usr/bin/ranlib libsend.a

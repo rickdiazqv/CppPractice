@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmsgmgr.a  CMakeFiles/msgmgr.dir/messagemanager.cpp.o
+/usr/bin/ranlib libmsgmgr.a

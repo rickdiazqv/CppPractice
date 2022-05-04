@@ -1,0 +1,2 @@
+/usr/bin/ar qc libconn.a  CMakeFiles/conn.dir/messageconnection.cpp.o
+/usr/bin/ranlib libconn.a
