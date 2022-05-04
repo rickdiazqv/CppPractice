@@ -1,0 +1,2 @@
+/usr/bin/ar qc librecv.a  CMakeFiles/recv.dir/messagereceiver.cpp.o
+/usr/bin/ranlib librecv.a
