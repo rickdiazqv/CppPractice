@@ -73,7 +73,7 @@ int MessageManager::run_socket()
   // デバッグ
   {
     sockaddr_in saddr = conn.getAddr();
-    IpAddr ip((unsigned int)(saddr.sin_addr.s_addr));
+    IpAddr ip(saddr.sin_addr.s_addr);
     LOGI << "connected with";
     LOGI
         << ip.getAddr() << ":"
@@ -86,7 +86,7 @@ int MessageManager::run_socket()
   // デバッグ
   {
     sockaddr_in saddr = conn.getAddr();
-    IpAddr ip((unsigned int)(saddr.sin_addr.s_addr));
+    IpAddr ip(saddr.sin_addr.s_addr);
     // 受け取った文字を表示
     LOGI << msg << " from";
     LOGI
@@ -100,7 +100,7 @@ int MessageManager::run_socket()
   // デバッグ
   {
     sockaddr_in saddr = conn.getAddr();
-    IpAddr ip((unsigned int)(saddr.sin_addr.s_addr));
+    IpAddr ip(saddr.sin_addr.s_addr);
     LOGI << "sent message to";
     LOGI
         << ip.getAddr() << ":"

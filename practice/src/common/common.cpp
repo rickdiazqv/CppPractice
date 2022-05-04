@@ -1,12 +1,11 @@
 #include "common.h"
 
-IpAddr::IpAddr()
+IpAddr::IpAddr() : IpAddr(0)
 {
 }
 
-IpAddr::IpAddr(unsigned int intValue)
+IpAddr::IpAddr(const in_addr_t intValue) : intValue(intValue)
 {
-    this->intValue = intValue;
 }
 
 IpAddr::~IpAddr()
@@ -25,8 +24,3 @@ string IpAddr::getAddr()
 
     return ss.str();
 }
-
-// bool json_contains(json &j, string k)
-//{
-//     bool res = j.contains(k);
-// }

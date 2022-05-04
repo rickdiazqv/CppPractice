@@ -27,15 +27,18 @@ constexpr int MESSAGE_SIZE = 1024;
 
 constexpr int PLAYER_NUM = 2;
 
+constexpr const char *k_message = "message";
+constexpr const char *k_msgType = "messagetype";
+
 union IpAddr
 {
 public:
-    unsigned int intValue;
-    unsigned char charValue[4];
+    in_addr_t intValue;
+    uint8_t charValue[4];
 
 public:
     IpAddr();
-    IpAddr(unsigned int intValue);
+    IpAddr(const in_addr_t intValue);
     ~IpAddr();
 
 public:

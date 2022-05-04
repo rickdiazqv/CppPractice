@@ -1,9 +1,5 @@
 #include "entrydata.h"
 
-const string EntryData::k_message = "message";
-const string EntryData::k_playername = "playername";
-const string EntryData::k_state = "state";
-
 EntryData::EntryData()
 {
 }
@@ -12,19 +8,31 @@ EntryData::~EntryData()
 {
 }
 
-int EntryData::entry(json &j)
+int EntryData::entry(json &j, sockaddr_in addr)
 {
-    if (!json_contains(j, k_message))
+    if (!json_contains(j, k_msgType, k_message))
     {
         return -1;
     }
 
-    json &mes = j[k_message];
+    string msgType = j[k_msgType].get<string>();
 
-    if (!json_contains(j, k_playername, k_state))
+    if (msgType != msgType_entry)
     {
         return -2;
     }
+
+    json &mes = j[k_message];
+
+    if (!json_contains(mes, k_playerName, k_state))
+    {
+        return -3;
+    }
+
+    // プレイヤーの登録
+    string name = mes[k_playerName].get<string>();
+    in_addr_t ip = addr.sin_addr.s_addr;
+    this->entries.emplace(ip, PlayerData(name, ip, addr.sin_port));
 
     return 0;
 }
