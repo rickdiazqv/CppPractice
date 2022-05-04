@@ -1,18 +1,16 @@
 #pragma once
-#include <sys/types.h>
-#include <netinet/in.h>
 #include "common.h"
 
-class MessageProcessor {
+class MessageProcessor
+{
 protected:
-  const int port;
   sockaddr_in addr;
-  sockaddr* const p_addr;
+  sockaddr *const p_addr;
   const int l_addr;
   int sock = 0;
 
 public:
-  MessageProcessor(u_short port);
+  MessageProcessor();
   ~MessageProcessor();
 
 public:

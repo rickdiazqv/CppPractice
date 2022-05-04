@@ -3,7 +3,7 @@
 
 class MessageConnection : public MessageProcessor {
 public:
-    MessageConnection(u_short port, int sock);
+    MessageConnection(int sock);
     ~MessageConnection();
 
 public:

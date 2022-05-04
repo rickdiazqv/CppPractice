@@ -4,16 +4,16 @@
 #include "messagereceiver.h"
 #include "messagesender.h"
 
-class MessageManager : public MessageProcessor {
+class MessageManager : public MessageProcessor
+{
 private:
-
 public:
   MessageManager(u_short port);
   ~MessageManager();
-  
+
 public:
   void run();
-  
+
 public:
   int init() override;
 

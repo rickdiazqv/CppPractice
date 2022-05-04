@@ -3,7 +3,7 @@
 
 class MessageReceiver : public MessageProcessor {
 public:
-    MessageReceiver(u_short port, int sock);
+    MessageReceiver(int sock);
     ~MessageReceiver();
 
 public:

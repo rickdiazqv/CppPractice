@@ -1,8 +1,6 @@
 #include "messageconnection.h"
 
-MessageConnection::MessageConnection(u_short port, int sock) :
-    MessageProcessor(port) {
-    
+MessageConnection::MessageConnection(int sock) {
     this->sock = sock;
 }
 

@@ -13,12 +13,14 @@ add_executable(${PROJECT_NAME} main.cpp)
 # サブディレクトリを追加
 add_subdirectory(common)
 add_subdirectory(message)
+add_subdirectory(entry)
 
 # インクルードディレクトリを追加
 target_include_directories(
     ${PROJECT_NAME}
     PRIVATE
     ${MESSAGE_DIR}
+    entry
 )
 
 # ライブラリディレクトリを追加
@@ -26,6 +28,7 @@ target_link_directories(
     ${PROJECT_NAME}
     PRIVATE
     ${MESSAGE_DIR}
+    entry
 )
 
 # ライブラリをリンク
@@ -33,4 +36,5 @@ target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE
     msgmgr
+    entry
 )

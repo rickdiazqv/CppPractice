@@ -1,6 +1,7 @@
 #include "messagemanager.h"
 
-int main() {
+int main()
+{
   MessageManager mgr(PORT);
 
   mgr.init();

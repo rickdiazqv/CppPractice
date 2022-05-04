@@ -1,8 +1,6 @@
 #include "messagereceiver.h"
 
-MessageReceiver::MessageReceiver(u_short port, int sock) :
-    MessageProcessor(port) {
-    
+MessageReceiver::MessageReceiver(int sock) {
     this->sock = sock;
 }
 
