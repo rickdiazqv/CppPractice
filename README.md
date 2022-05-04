@@ -1,2 +1,3 @@
 # CppPractice
-学習用
+LinuxでのC++プログラミングの学習記録
+Learning C++ programming on Linux
