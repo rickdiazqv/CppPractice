@@ -12,9 +12,12 @@ protected:
   int sock = 0;
 
 public:
-    MessageProcessor(u_short port);
-    ~MessageProcessor();
+  MessageProcessor(u_short port);
+  ~MessageProcessor();
 
 public:
-    virtual int init() = 0;
+  virtual int init() = 0;
+
+public:
+  sockaddr_in getAddr() const { return this->addr; }
 };

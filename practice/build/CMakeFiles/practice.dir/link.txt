@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/practice.dir/main.cpp.o  -o practice  -L/home/ubuntu/c++/practice/src/message  -L/home/ubuntu/c++/practice/src/common -Wl,-rpath,/home/ubuntu/c++/practice/src/message:/home/ubuntu/c++/practice/src/common message/libmsgmgr.a message/conn/libconn.a message/recv/librecv.a message/send/libsend.a message/libmessage.a common/libcommon.a 

@@ -16,6 +16,6 @@ int MessageSender::init() {
 }
 
 void MessageSender::send(const char* const message) {
-    LOGI << "send to " << ;
+    LOGI << "send to ";
     sendto(this->sock, message, strlen(message), 0, this->p_addr, this->l_addr);
 }

@@ -67,17 +67,51 @@ int MessageManager::run_socket() {
 
     return -1;
   }
-  LOGI << "connected";
+  // デバッグ
+  {
+    sockaddr_in saddr = conn.getAddr();
+    IpAddr ip((unsigned int)(saddr.sin_addr.s_addr));
+    LOGI << "connected with";
+    LOGI
+      << (int)(ip.charValue[0]) << "."
+      << (int)(ip.charValue[1]) << "."
+      << (int)(ip.charValue[2]) << "."
+      << (int)(ip.charValue[3]) << ":"
+      << saddr.sin_port;
+  }
 
   // クライアントからデータを受け取る  
   MessageReceiver recv(this->port, sockClient);
   string msg = recv.receive();
-  // 受け取った文字を表示
-  LOGI << msg;
+  // デバッグ
+  {
+    sockaddr_in saddr = conn.getAddr();
+    IpAddr ip((unsigned int)(saddr.sin_addr.s_addr));
+    // 受け取った文字を表示
+    LOGI << msg << " from";
+    LOGI
+      << (int)(ip.charValue[0]) << "."
+      << (int)(ip.charValue[1]) << "."
+      << (int)(ip.charValue[2]) << "."
+      << (int)(ip.charValue[3]) << ":"
+      << saddr.sin_port;
+  }
 
   // クライアントにデータを送る
   MessageSender send(this->port, this->addr, sockClient);
   send.send("Sent From C++\0");
+  // デバッグ
+  {
+    sockaddr_in saddr = conn.getAddr();
+    IpAddr ip((unsigned int)(saddr.sin_addr.s_addr));
+    LOGI << "sent message to";
+    LOGI
+      << (int)(ip.charValue[0]) << "."
+      << (int)(ip.charValue[1]) << "."
+      << (int)(ip.charValue[2]) << "."
+      << (int)(ip.charValue[3]) << ":"
+      << saddr.sin_port;
+  }
 
   return 0;
 }
