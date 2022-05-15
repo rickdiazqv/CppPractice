@@ -2,64 +2,51 @@
 cmake_minimum_required(VERSION 3.13.5)
 
 # ライブラリを追加
-add_library(message STATIC messageprocessor.cpp)
-add_library(msgmgr STATIC messagemanager.cpp)
+add_library(ssl STATIC wolfsslprocessor.cpp)
+add_library(sslmgr STATIC wolfsslmanager.cpp)
 
 # サブディレクトリを追加
-add_subdirectory(conn)
-add_subdirectory(recv)
-add_subdirectory(send)
+add_subdirectory(cre)
 
 # インクルードディレクトリを追加
 target_include_directories(
-    message
+    ssl
     PUBLIC
     ${COMMON_DIR}
 )
 target_include_directories(
-    msgmgr
+    sslmgr
     PRIVATE
-    ${MESSAGE_DIR}/conn
-    ${MESSAGE_DIR}/recv
-    ${MESSAGE_DIR}/send
-    ${WOLFSSL_DIR}
+    ${WOLFSSL_DIR}/cre
 )
 
 # ライブラリディレクトリを追加
 target_link_directories(
-    message
+    ssl
     PUBLIC
     ${COMMON_DIR}
 )
 target_link_directories(
-    msgmgr
+    sslmgr
     PRIVATE
-    ${MESSAGE_DIR}/conn
-    ${MESSAGE_DIR}/recv
-    ${MESSAGE_DIR}/send
-    ${WOLFSSL_DIR}
+    ${WOLFSSL_DIR}/cre
 )
 
 # ライブラリをリンク
 target_link_libraries(
-    message
+    ssl
     PUBLIC
     common
 )
 target_link_libraries(
-    msgmgr
+    sslmgr
     PUBLIC
-    message
+    ssl
 )
 target_link_libraries(
-    msgmgr
-    PRIVATE
-    conn
-    recv
-    send
     sslmgr
+    PRIVATE
+    sslcre
 )
 
-# デバッグ
-#message(STATUS ${WOLFSSL_DIR})
-#message(STATUS ${CMAKE_BINARY_DIR})
+message(${CMAKE_CURRENT_SOURCE_DIR})

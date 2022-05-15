@@ -23,6 +23,8 @@ int MessageManager::init()
 
   LOGI << "MessageManager start init";
 
+  wolfSSLMgr.init();
+
   // ソケットを作成
   this->sock = socket(addr.sin_family, SOCK_STREAM, 0);
 
@@ -61,6 +63,10 @@ void MessageManager::run()
 
 int MessageManager::run_socket()
 {
+  WOLFSSL_CTX *ctx;
+  WOLFSSL *ssl;
+  int res;
+
   // クライアントからの接続を待つ
   MessageConnection conn(this->sock);
   int sockClient = conn.connect();
@@ -74,11 +80,56 @@ int MessageManager::run_socket()
   {
     sockaddr_in saddr = conn.getAddr();
     IpAddr ip(saddr.sin_addr.s_addr);
-    LOGI << "connected with";
-    LOGI
-        << ip.getAddr() << ":"
-        << saddr.sin_port;
+    LOGI << "connected with "
+         << ip.getAddr() << ":"
+         << saddr.sin_port;
   }
+
+  /*int sockListen, sockClient;
+  sockaddr addrClient;
+  socklen_t l_addrClient = sizeof(addrClient);
+  tcp_accept(&this->sock, &sockClient, nullptr, PORT, 1, 0, 0, 0, 1,
+             (SOCKADDR_IN_T *)&addrClient, &l_addrClient);
+
+  // Create wolfSSL object
+  if ((ssl = wolfSSL_new(ctx)) == nullptr)
+  {
+    LOGE << "ssl error";
+    return -1;
+  }
+
+  int sockcl = sockClient;
+  if ((res = wolfSSL_set_fd(ssl, sockcl)) != SSL_SUCCESS)
+  {
+    LOGE << "set error: " << res;
+    return -1;
+  }
+  LOGI << "sockcl: " << sockcl;
+
+  int n;
+  char buf[MESSAGE_SIZE];
+  if ((n = wolfSSL_read(ssl, buf, (sizeof(buf) - 1))) > 0)
+  {
+    if (wolfSSL_write(ssl, buf, n) != n)
+      LOGE << "wolfSSL_write error";
+  }
+  LOGI << buf;
+  stringstream ss;
+  for (int i = 0; i < 12; i++)
+  {
+    ss << (int)buf[i] << " ";
+  }
+  LOGI << ss.str();
+  if (n < 0)
+    LOGE << "wolfSSL_read error = " << wolfSSL_get_error(ssl, n) << ", n = " << n;
+  else if (n == 0)
+    LOGI << "Connection close by peer";
+  wolfSSL_free(ssl);
+  close(sockcl);
+  wolfSSL_CTX_free(ctx);
+  wolfSSL_Cleanup();
+  // exit(EXIT_SUCCESS);
+  return 0;*/
 
   // クライアントからデータを受け取る
   MessageReceiver recv(sockClient);
@@ -101,10 +152,9 @@ int MessageManager::run_socket()
   {
     sockaddr_in saddr = conn.getAddr();
     IpAddr ip(saddr.sin_addr.s_addr);
-    LOGI << "sent message to";
-    LOGI
-        << ip.getAddr() << ":"
-        << saddr.sin_port;
+    LOGI << "sent message to"
+         << ip.getAddr() << ":"
+         << saddr.sin_port;
   }
 
   return 0;

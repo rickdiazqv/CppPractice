@@ -17,10 +17,10 @@ string IpAddr::getAddr()
     stringstream ss;
 
     ss
-        << this->charValue[0] << "."
-        << this->charValue[1] << "."
-        << this->charValue[2] << "."
-        << this->charValue[3];
+        << (in_addr_t)(this->charValue[0]) << "."
+        << (in_addr_t)(this->charValue[1]) << "."
+        << (in_addr_t)(this->charValue[2]) << "."
+        << (in_addr_t)(this->charValue[3]);
 
     return ss.str();
 }

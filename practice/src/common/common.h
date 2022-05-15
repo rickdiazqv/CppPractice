@@ -14,6 +14,10 @@
 #include <plog/Appenders/RollingFileAppender.h>
 #include <unordered_map>
 #include <json.hpp>
+#include <wolfssl/options.h>
+#include <wolfssl/ssl.h>
+#include <wolfssl/test.h>
+#include <errno.h>
 
 using namespace std;
 using json = nlohmann::json;

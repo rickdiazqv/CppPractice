@@ -2,31 +2,27 @@
 cmake_minimum_required(VERSION 3.13.5)
 
 # ライブラリを追加
-add_library(player STATIC playerdata.cpp)
-add_library(plgm STATIC playergamedata.cpp)
+add_library(sslcre STATIC wolfsslcreator.cpp)
 
 # インクルードディレクトリを追加
 target_include_directories(
-    plgm
+    sslcre
     PUBLIC
-    ${COMMON_DIR}
+    ${WOLFSSL_DIR}
 )
 
 # ライブラリディレクトリを追加
 target_link_directories(
-    plgm
+    sslcre
     PUBLIC
-    ${COMMON_DIR}
+    ${WOLFSSL_DIR}
 )
 
 # ライブラリをリンク
 target_link_libraries(
-    player
+    sslcre
     PUBLIC
-    plgm
+    ssl
 )
-target_link_libraries(
-    plgm
-    PUBLIC
-    common
-)
+
+message(${CMAKE_CURRENT_SOURCE_DIR})

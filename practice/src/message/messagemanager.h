@@ -3,10 +3,14 @@
 #include "messageconnection.h"
 #include "messagereceiver.h"
 #include "messagesender.h"
+#include "wolfsslmanager.h"
 
 class MessageManager : public MessageProcessor
 {
+
 private:
+  WolfSSLManager wolfSSLMgr;
+
 public:
   MessageManager(u_short port);
   ~MessageManager();
