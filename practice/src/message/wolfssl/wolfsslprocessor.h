@@ -3,7 +3,7 @@
 
 class WolfSSLProcessor
 {
-private:
+protected:
     WOLFSSL *ssl = nullptr;
 
 public:

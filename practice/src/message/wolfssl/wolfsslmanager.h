@@ -1,7 +1,11 @@
+#pragma once
 #include "wolfsslprocessor.h"
 #include "wolfsslcreator.h"
+#include "wolfsslreader.h"
 
-class WolfSSLManager : public WolfSSLProcessor
+#define SINGLETON_WOLFSSLMANAGER Singleton<WolfSSLManager>
+
+class WolfSSLManager : public SINGLETON_WOLFSSLMANAGER, public WolfSSLProcessor
 {
 private:
     static constexpr const char *const SERVER_CERT_PATH = "/etc/ssl/practice/server-cert.pem";
@@ -11,8 +15,11 @@ private:
     WOLFSSL_CTX *ctx = nullptr;
 
 public:
+    friend class SINGLETON_WOLFSSLMANAGER;
+
+protected:
     WolfSSLManager();
-    ~WolfSSLManager();
+    virtual ~WolfSSLManager();
 
 public:
     int init() override;

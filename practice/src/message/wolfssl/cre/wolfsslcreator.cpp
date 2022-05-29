@@ -17,24 +17,28 @@ WOLFSSL *WolfSSLCreator::create(int sock)
 {
     /* Create a WOLFSSL object */
     WOLFSSL *ssl = wolfSSL_new(ctx);
+    int ret;
+    char error[MESSAGE_SIZE];
 
     if (ssl == nullptr)
     {
-        LOGW << "failed to create SSL";
+        LOGE << "failed to create SSL";
         return nullptr;
     }
 
     /* Attach wolfSSL to the socket */
-    if (wolfSSL_set_fd(ssl, sock) != SSL_SUCCESS)
+    if ((ret = wolfSSL_set_fd(ssl, sock)) != SSL_SUCCESS)
     {
-        LOGW << "failed to set client socket";
+        LOGE << "failed to set client socket: " << ret;
+        LOGE << wolfSSL_ERR_error_string(wolfSSL_get_error(ssl, ret), error);
         return nullptr;
     }
 
     /* Establish TLS connection */
-    if (wolfSSL_accept(ssl) != WOLFSSL_SUCCESS)
+    if ((ret = wolfSSL_accept(ssl)) != WOLFSSL_SUCCESS)
     {
-        LOGW << "failed to accept SSL";
+        LOGE << "failed to accept SSL: " << ret;
+        LOGE << wolfSSL_ERR_error_string(wolfSSL_get_error(ssl, ret), error);
         return nullptr;
     }
 

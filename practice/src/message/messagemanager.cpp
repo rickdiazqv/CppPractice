@@ -1,17 +1,13 @@
 #include "messagemanager.h"
 
-MessageManager::MessageManager(u_short port)
+MessageManager::MessageManager() : wolfSSLMgr(WolfSSLManager::instance())
 {
   // AF_INETを渡すことによりIPv4で通信する事を指定
   this->addr.sin_family = AF_INET;
   // ポート番号を指定好きなポートを指定してください。
-  this->addr.sin_port = htons(port);
+  this->addr.sin_port = htons(PORT);
   // INADDR_ANYを指定する事によりどのIPからでも通信を受け取る状態にする。
   this->addr.sin_addr.s_addr = INADDR_ANY;
-}
-
-MessageManager::~MessageManager()
-{
 }
 
 int MessageManager::init()
@@ -84,6 +80,9 @@ int MessageManager::run_socket()
          << ip.getAddr() << ":"
          << saddr.sin_port;
   }
+
+  wolfSSLMgr.run_ssl(sockClient);
+  return 0;
 
   /*int sockListen, sockClient;
   sockaddr addrClient;

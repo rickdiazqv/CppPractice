@@ -1,5 +1,6 @@
 # CMakeのバージョンを設定する
-cmake_minimum_required(VERSION 3.13.5)
+cmake_minimum_required(VERSION 3.16.3)
+message(${CMAKE_CURRENT_SOURCE_DIR})
 
 # ライブラリを追加
 add_library(sslcre STATIC wolfsslcreator.cpp)
@@ -24,5 +25,3 @@ target_link_libraries(
     PUBLIC
     ssl
 )
-
-message(${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,5 +1,6 @@
 # CMakeのバージョンを設定する
-cmake_minimum_required(VERSION 3.13.5)
+cmake_minimum_required(VERSION 3.16.3)
+message(${CMAKE_CURRENT_SOURCE_DIR})
 
 # ライブラリを追加
 add_library(entry STATIC entrydata.cpp)

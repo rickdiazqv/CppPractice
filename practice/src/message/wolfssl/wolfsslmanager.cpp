@@ -10,7 +10,8 @@ WolfSSLManager::~WolfSSLManager()
 
 int WolfSSLManager::init()
 {
-    int res;
+    int ret;
+    char error[MESSAGE_SIZE];
 
     // SSLライブラリの初期化
     wolfSSL_Init();
@@ -23,19 +24,27 @@ int WolfSSLManager::init()
         return -1;
     }
 
-    //  Load server certs into ctx
-    if ((res = wolfSSL_CTX_use_certificate_file(ctx, SERVER_CERT_PATH, SSL_FILETYPE_PEM)) != SSL_SUCCESS)
+    /*if (wolfSSL_CTX_load_verify_locations(ctx, "/etc/ssl/practiceCA/ca-cert.pem", 0) != SSL_SUCCESS)
     {
-        LOGE << "cert error" << res;
+        LOGE << "ca cert error: " << res;
+        return -1;
+    }*/
+
+    //  Load server certs into ctx
+    if ((ret = wolfSSL_CTX_use_certificate_file(ctx, SERVER_CERT_PATH, SSL_FILETYPE_PEM)) != SSL_SUCCESS)
+    {
+        LOGE << "cert error: " << ret;
         return -1;
     }
 
     // Load server key into ctx
-    if ((res = wolfSSL_CTX_use_PrivateKey_file(ctx, SERVER_KEY_PATH, SSL_FILETYPE_PEM)) != SSL_SUCCESS)
+    if ((ret = wolfSSL_CTX_use_PrivateKey_file(ctx, SERVER_KEY_PATH, SSL_FILETYPE_PEM)) != SSL_SUCCESS)
     {
-        LOGE << "key error: " << res;
+        LOGE << "key error: " << ret;
         return -1;
     }
+
+    return 0;
 }
 
 int WolfSSLManager::run_ssl(int sock)
@@ -47,4 +56,11 @@ int WolfSSLManager::run_ssl(int sock)
     {
         return -1;
     }
+
+    WolfSSLReader read(ssl);
+    string mes = read.read();
+
+    LOGI << mes;
+
+    return 0;
 }

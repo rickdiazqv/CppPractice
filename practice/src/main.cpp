@@ -2,7 +2,7 @@
 
 int main()
 {
-  MessageManager mgr(PORT);
+  auto &mgr = MessageManager::instance();
 
   mgr.init();
   mgr.run();

@@ -1,5 +1,6 @@
 # CMakeのバージョンを設定する
-cmake_minimum_required(VERSION 3.13.5)
+cmake_minimum_required(VERSION 3.16.3)
+message(${CMAKE_CURRENT_SOURCE_DIR})
 
 # ライブラリを追加
 add_library(message STATIC messageprocessor.cpp)
@@ -9,6 +10,7 @@ add_library(msgmgr STATIC messagemanager.cpp)
 add_subdirectory(conn)
 add_subdirectory(recv)
 add_subdirectory(send)
+add_subdirectory(wolfssl)
 
 # インクルードディレクトリを追加
 target_include_directories(
@@ -18,9 +20,9 @@ target_include_directories(
 )
 target_include_directories(
     msgmgr
-    PRIVATE
-    ${MESSAGE_DIR}/conn
+    PUBLIC
     ${MESSAGE_DIR}/recv
+    ${MESSAGE_DIR}/conn
     ${MESSAGE_DIR}/send
     ${WOLFSSL_DIR}
 )
@@ -57,9 +59,9 @@ target_link_libraries(
     conn
     recv
     send
+)
+target_link_libraries(
+    msgmgr
+    PUBLIC
     sslmgr
 )
-
-# デバッグ
-#message(STATUS ${WOLFSSL_DIR})
-#message(STATUS ${CMAKE_BINARY_DIR})

@@ -5,15 +5,20 @@
 #include "messagesender.h"
 #include "wolfsslmanager.h"
 
-class MessageManager : public MessageProcessor
+#define SINGLETON_MESSAGEMANAGER Singleton<MessageManager>
+
+class MessageManager : public SINGLETON_MESSAGEMANAGER, public MessageProcessor
 {
 
 private:
-  WolfSSLManager wolfSSLMgr;
+  WolfSSLManager &wolfSSLMgr;
 
 public:
-  MessageManager(u_short port);
-  ~MessageManager();
+  friend class SINGLETON_MESSAGEMANAGER;
+
+protected:
+  MessageManager();
+  virtual ~MessageManager() {}
 
 public:
   void run();

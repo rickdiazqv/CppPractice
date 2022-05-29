@@ -67,3 +67,22 @@ bool json_contains(json &j, T t, U... u)
 {
     return json_contains(j, t) && json_contains(j, u...);
 }
+
+template <typename T>
+class Singleton
+{
+protected:
+    Singleton() {}
+    virtual ~Singleton() {}
+
+public:
+    static inline T &instance()
+    {
+        static T ins;
+        return ins;
+    }
+
+private:
+    void operator=(const Singleton &other) {}
+    Singleton(const Singleton &other) {}
+};

@@ -1,3 +1,4 @@
+#pragma once
 #include "wolfsslprocessor.h"
 
 class WolfSSLCreator : public WolfSSLProcessor
