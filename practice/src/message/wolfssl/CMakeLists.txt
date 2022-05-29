@@ -39,6 +39,11 @@ target_link_directories(
 # ライブラリをリンク
 target_link_libraries(
     ssl
+    PRIVATE
+    wolfssl
+)
+target_link_libraries(
+    ssl
     PUBLIC
     common
 )

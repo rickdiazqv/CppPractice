@@ -47,7 +47,7 @@ int WolfSSLManager::init()
     return 0;
 }
 
-int WolfSSLManager::run_ssl(int sock)
+int WolfSSLManager::process(int sock)
 {
     WolfSSLCreator cre(ctx);
     WOLFSSL *ssl = cre.create(sock);
@@ -61,6 +61,15 @@ int WolfSSLManager::run_ssl(int sock)
     string mes = read.read();
 
     LOGI << mes;
+
+    try
+    {
+        json j = json::parse(mes);
+    }
+    catch (...)
+    {
+        LOGW << "failed to parse message";
+    }
 
     return 0;
 }

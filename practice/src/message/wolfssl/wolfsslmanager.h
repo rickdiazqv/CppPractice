@@ -23,5 +23,5 @@ protected:
 
 public:
     int init() override;
-    int run_ssl(int sock);
+    int process(int sock);
 };

@@ -10,6 +10,10 @@ MessageManager::MessageManager() : wolfSSLMgr(WolfSSLManager::instance())
   this->addr.sin_addr.s_addr = INADDR_ANY;
 }
 
+MessageManager::~MessageManager()
+{
+}
+
 int MessageManager::init()
 {
   static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
@@ -52,17 +56,13 @@ int MessageManager::init()
 
 void MessageManager::run()
 {
-  while (run_socket() == 0)
+  while (process() == 0)
   {
   }
 }
 
-int MessageManager::run_socket()
+int MessageManager::process()
 {
-  WOLFSSL_CTX *ctx;
-  WOLFSSL *ssl;
-  int res;
-
   // クライアントからの接続を待つ
   MessageConnection conn(this->sock);
   int sockClient = conn.connect();
@@ -81,55 +81,9 @@ int MessageManager::run_socket()
          << saddr.sin_port;
   }
 
-  wolfSSLMgr.run_ssl(sockClient);
-  return 0;
+  return wolfSSLMgr.process(sockClient);
 
-  /*int sockListen, sockClient;
-  sockaddr addrClient;
-  socklen_t l_addrClient = sizeof(addrClient);
-  tcp_accept(&this->sock, &sockClient, nullptr, PORT, 1, 0, 0, 0, 1,
-             (SOCKADDR_IN_T *)&addrClient, &l_addrClient);
-
-  // Create wolfSSL object
-  if ((ssl = wolfSSL_new(ctx)) == nullptr)
-  {
-    LOGE << "ssl error";
-    return -1;
-  }
-
-  int sockcl = sockClient;
-  if ((res = wolfSSL_set_fd(ssl, sockcl)) != SSL_SUCCESS)
-  {
-    LOGE << "set error: " << res;
-    return -1;
-  }
-  LOGI << "sockcl: " << sockcl;
-
-  int n;
-  char buf[MESSAGE_SIZE];
-  if ((n = wolfSSL_read(ssl, buf, (sizeof(buf) - 1))) > 0)
-  {
-    if (wolfSSL_write(ssl, buf, n) != n)
-      LOGE << "wolfSSL_write error";
-  }
-  LOGI << buf;
-  stringstream ss;
-  for (int i = 0; i < 12; i++)
-  {
-    ss << (int)buf[i] << " ";
-  }
-  LOGI << ss.str();
-  if (n < 0)
-    LOGE << "wolfSSL_read error = " << wolfSSL_get_error(ssl, n) << ", n = " << n;
-  else if (n == 0)
-    LOGI << "Connection close by peer";
-  wolfSSL_free(ssl);
-  close(sockcl);
-  wolfSSL_CTX_free(ctx);
-  wolfSSL_Cleanup();
-  // exit(EXIT_SUCCESS);
-  return 0;*/
-
+  /*
   // クライアントからデータを受け取る
   MessageReceiver recv(sockClient);
   string msg = recv.receive();
@@ -157,4 +111,5 @@ int MessageManager::run_socket()
   }
 
   return 0;
+  */
 }

@@ -1,4 +1,7 @@
 #pragma once
+#include <wolfssl/options.h>
+#include <wolfssl/ssl.h>
+#include <wolfssl/test.h>
 #include "common.h"
 
 class WolfSSLProcessor

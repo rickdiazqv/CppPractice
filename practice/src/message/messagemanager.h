@@ -18,7 +18,7 @@ public:
 
 protected:
   MessageManager();
-  virtual ~MessageManager() {}
+  virtual ~MessageManager();
 
 public:
   void run();
@@ -27,5 +27,5 @@ public:
   int init() override;
 
 private:
-  int run_socket();
+  int process();
 };

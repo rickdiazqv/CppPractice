@@ -1,28 +1,6 @@
 #pragma once
-#include <iostream>
-#include <sstream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <string>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <plog/Init.h>
-#include <plog/Log.h>
-#include <plog/Formatters/TxtFormatter.h>
-#include <plog/Appenders/ColorConsoleAppender.h>
-#include <plog/Appenders/RollingFileAppender.h>
-#include <unordered_map>
-#include <json.hpp>
-#include <wolfssl/options.h>
-#include <wolfssl/ssl.h>
-#include <wolfssl/test.h>
-#include <errno.h>
-
-using namespace std;
-using json = nlohmann::json;
-template <typename _Key, typename _Tp>
-using dict = unordered_map<_Key, _Tp>;
+#include "external.h"
+#include "manifoldqueue.h"
 
 constexpr const char *LOG_PATH = "message.log";
 

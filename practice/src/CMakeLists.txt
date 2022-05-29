@@ -7,6 +7,7 @@ project(practice CXX)
 
 # 変数を設定
 set(COMMON_DIR ${CMAKE_SOURCE_DIR}/common)
+set(QUE_DIR ${COMMON_DIR}/que)
 set(MESSAGE_DIR ${CMAKE_SOURCE_DIR}/message)
 set(WOLFSSL_DIR ${MESSAGE_DIR}/wolfssl)
 

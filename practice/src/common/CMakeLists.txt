@@ -5,9 +5,6 @@ message(${CMAKE_CURRENT_SOURCE_DIR})
 # ライブラリを追加
 add_library(common STATIC common.cpp)
 
-# ライブラリをリンク
-target_link_libraries(
-    common
-    PRIVATE
-    wolfssl
-)
+# インクルードディレクトリを追加
+target_include_directories(common PUBLIC ${QUE_DIR})
+target_include_directories(common PUBLIC ${COMMON_DIR})
