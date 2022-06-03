@@ -58,17 +58,18 @@ int WolfSSLManager::process(int sock)
     }
 
     WolfSSLReader read(ssl);
-    string mes = read.read();
-
-    LOGI << mes;
+    auto mes = read.read_bin();
+    int size = mes[0];
+    mes = vector<uint8_t>(mes.begin(), mes.begin() + size);
 
     try
     {
-        json j = json::parse(mes);
+        json j = json::from_bson(mes);
+        LOGI << j.dump();
     }
-    catch (...)
+    catch (jexc e)
     {
-        LOGW << "failed to parse message";
+        LOGW << e.what();
     }
 
     return 0;

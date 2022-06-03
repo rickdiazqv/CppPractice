@@ -1,5 +1,4 @@
 #include <queue>
-#include <exception>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -33,8 +32,11 @@ public:
     void push(T data)
     {
         unique_lock<mutex> lk(mtx);
-        cv_nofull.wait(lk, [&]
-                       { return que.size() < cap || isClosed || isAborted });
+        cv_nofull.wait(lk,
+                       [&]
+                       {
+                           return que.size() < cap || isClosed || isAborted;
+                       });
 
         if (isClosed)
         {

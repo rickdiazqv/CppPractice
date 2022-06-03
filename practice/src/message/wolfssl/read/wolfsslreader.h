@@ -2,10 +2,6 @@
 
 class WolfSSLReader : WolfSSLProcessor
 {
-private:
-    char buff[MESSAGE_SIZE];
-    size_t l_buff;
-
 public:
     WolfSSLReader(WOLFSSL *ssl);
     ~WolfSSLReader();
@@ -15,4 +11,5 @@ public:
 
 public:
     string read();
+    vector<uint8_t> read_bin();
 };

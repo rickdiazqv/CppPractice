@@ -3,10 +3,12 @@
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
+//#include <stdint.h>
 #include <string.h>
 #include <string>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <exception>
 #include <plog/Init.h>
 #include <plog/Log.h>
 #include <plog/Formatters/TxtFormatter.h>
@@ -18,5 +20,6 @@
 
 using namespace std;
 using json = nlohmann::json;
+using jexc = nlohmann::detail::exception;
 template <typename _Key, typename _Tp>
 using dict = unordered_map<_Key, _Tp>;
