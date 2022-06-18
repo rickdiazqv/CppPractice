@@ -18,8 +18,8 @@
 #include <json.hpp>
 #include <errno.h>
 
-using namespace std;
+// using namespace std;
 using json = nlohmann::json;
 using jexc = nlohmann::detail::exception;
 template <typename _Key, typename _Tp>
-using dict = unordered_map<_Key, _Tp>;
+using dict = std::unordered_map<_Key, _Tp>;

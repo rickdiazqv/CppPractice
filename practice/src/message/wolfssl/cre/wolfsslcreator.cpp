@@ -13,6 +13,11 @@ int WolfSSLCreator::init()
     return 0;
 }
 
+int WolfSSLCreator::term()
+{
+    return 0;
+}
+
 WOLFSSL *WolfSSLCreator::create(int sock)
 {
     /* Create a WOLFSSL object */
@@ -37,7 +42,7 @@ WOLFSSL *WolfSSLCreator::create(int sock)
     /* Establish TLS connection */
     if ((ret = wolfSSL_accept(ssl)) != WOLFSSL_SUCCESS)
     {
-        LOGE << "failed to accept SSL: " << ret;
+        LOGE << "failed to accept: " << ret;
         LOGE << wolfSSL_ERR_error_string(wolfSSL_get_error(ssl, ret), error);
         return nullptr;
     }

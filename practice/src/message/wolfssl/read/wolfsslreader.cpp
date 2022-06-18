@@ -13,7 +13,12 @@ int WolfSSLReader::init()
     return 0;
 }
 
-string WolfSSLReader::read()
+int WolfSSLReader::term()
+{
+    return 0;
+}
+
+std::string WolfSSLReader::read()
 {
     char buff[MESSAGE_SIZE];
     memset(buff, 0, MESSAGE_SIZE);
@@ -21,13 +26,13 @@ string WolfSSLReader::read()
     if (wolfSSL_read(ssl, buff, MESSAGE_SIZE) == -1)
     {
         LOGW << "failed to read";
-        return string();
+        return std::string();
     }
 
-    return string(buff);
+    return std::string(buff);
 }
 
-vector<uint8_t> WolfSSLReader::read_bin()
+std::vector<uint8_t> WolfSSLReader::read_bin()
 {
     uint8_t buff[MESSAGE_SIZE];
     memset(buff, 0, MESSAGE_SIZE);
@@ -35,8 +40,8 @@ vector<uint8_t> WolfSSLReader::read_bin()
     if (wolfSSL_read(ssl, buff, MESSAGE_SIZE) == -1)
     {
         LOGW << "failed to read as bin";
-        return vector<uint8_t>();
+        return std::vector<uint8_t>();
     }
 
-    return vector<uint8_t>(std::begin(buff), std::end(buff));
+    return std::vector<uint8_t>(std::begin(buff), std::end(buff));
 }

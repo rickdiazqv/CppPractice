@@ -17,10 +17,10 @@ class ManifoldQueue
 private:
     static const int capDefault = 10;
     const int cap = capDefault;
-    queue<T> que;
-    mutex mtx;
-    condition_variable cv_nofull;
-    condition_variable cv_noempty;
+    std::queue<T> que;
+    std::mutex mtx;
+    std::condition_variable cv_nofull;
+    std::condition_variable cv_noempty;
     bool isClosed = false;
     bool isAborted = false;
 
@@ -31,7 +31,7 @@ public:
 public:
     void push(T data)
     {
-        unique_lock<mutex> lk(mtx);
+        std::unique_lock<std::mutex> lk(mtx);
         cv_nofull.wait(lk,
                        [&]
                        {
@@ -43,6 +43,6 @@ public:
         }
     }
     bool pop(T &data) { return true; }
-    void close() {}
+    void term() {}
     void abort() {}
 };

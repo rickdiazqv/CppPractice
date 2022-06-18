@@ -8,8 +8,9 @@ public:
 
 public:
     int init() override;
+    int term() override;
 
 public:
-    string read();
-    vector<uint8_t> read_bin();
+    std::string read();
+    std::vector<uint8_t> read_bin();
 };

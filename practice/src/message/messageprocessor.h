@@ -1,7 +1,7 @@
 #pragma once
 #include "common.h"
 
-class MessageProcessor
+class MessageProcessor : public Initializer
 {
 protected:
   sockaddr_in addr;
@@ -12,9 +12,6 @@ protected:
 public:
   MessageProcessor();
   ~MessageProcessor();
-
-public:
-  virtual int init() = 0;
 
 public:
   sockaddr_in getAddr() const { return this->addr; }

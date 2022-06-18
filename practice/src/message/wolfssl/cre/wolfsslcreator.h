@@ -12,6 +12,7 @@ public:
 
 public:
     int init() override;
+    int term() override;
 
 public:
     WOLFSSL *create(int sock);

@@ -14,7 +14,11 @@ int WolfSSLManager::init()
     char error[MESSAGE_SIZE];
 
     // SSLライブラリの初期化
-    wolfSSL_Init();
+    if (wolfSSL_Init() != SSL_SUCCESS)
+    {
+        LOGE << "wolfssl init error";
+        return -1;
+    }
 
     // Get encryption method
     // Create wolfSSL_CTX
@@ -23,12 +27,6 @@ int WolfSSLManager::init()
         LOGE << "ctx error";
         return -1;
     }
-
-    /*if (wolfSSL_CTX_load_verify_locations(ctx, "/etc/ssl/practiceCA/ca-cert.pem", 0) != SSL_SUCCESS)
-    {
-        LOGE << "ca cert error: " << res;
-        return -1;
-    }*/
 
     //  Load server certs into ctx
     if ((ret = wolfSSL_CTX_use_certificate_file(ctx, SERVER_CERT_PATH, SSL_FILETYPE_PEM)) != SSL_SUCCESS)
@@ -47,6 +45,18 @@ int WolfSSLManager::init()
     return 0;
 }
 
+int WolfSSLManager::term()
+{
+    // Notify the client that the connection is ending
+    wolfSSL_shutdown(ssl);
+    LOGI << "Shutdown complete";
+
+    // Free the wolfSSL object
+    wolfSSL_free(ssl);
+
+    return 0;
+}
+
 int WolfSSLManager::process(int sock)
 {
     WolfSSLCreator cre(ctx);
@@ -60,7 +70,7 @@ int WolfSSLManager::process(int sock)
     WolfSSLReader read(ssl);
     auto mes = read.read_bin();
     int size = mes[0];
-    mes = vector<uint8_t>(mes.begin(), mes.begin() + size);
+    mes = std::vector<uint8_t>(mes.begin(), mes.begin() + size);
 
     try
     {

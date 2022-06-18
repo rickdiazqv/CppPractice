@@ -4,7 +4,7 @@
 #include <wolfssl/test.h>
 #include "common.h"
 
-class WolfSSLProcessor
+class WolfSSLProcessor : public Initializer
 {
 protected:
     WOLFSSL *ssl = nullptr;
@@ -13,7 +13,4 @@ public:
     WolfSSLProcessor();
     WolfSSLProcessor(WOLFSSL *ssl);
     ~WolfSSLProcessor();
-
-public:
-    virtual int init() = 0;
 };

@@ -12,9 +12,9 @@ IpAddr::~IpAddr()
 {
 }
 
-string IpAddr::getAddr()
+std::string IpAddr::getAddr()
 {
-    stringstream ss;
+    std::stringstream ss;
 
     ss
         << (in_addr_t)(this->charValue[0]) << "."

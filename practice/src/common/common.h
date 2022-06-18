@@ -4,7 +4,7 @@
 
 constexpr const char *LOG_PATH = "message.log";
 
-constexpr u_short PORT = 1919;
+constexpr u_short PORT = 10049;
 constexpr int MESSAGE_SIZE = 1024;
 
 constexpr int PLAYER_NUM = 2;
@@ -12,6 +12,7 @@ constexpr int PLAYER_NUM = 2;
 constexpr const char *k_message = "message";
 constexpr const char *k_msgType = "messagetype";
 
+// IPアドレス
 union IpAddr
 {
 public:
@@ -24,9 +25,10 @@ public:
     ~IpAddr();
 
 public:
-    string getAddr();
+    std::string getAddr();
 };
 
+// JSONキーの存在確認
 template <typename T>
 bool json_contains(json &j, T t)
 {
@@ -40,14 +42,23 @@ bool json_contains(json &j, T t)
     return res;
 }
 
+// JSONキーの存在確認
 template <typename T, typename... U>
 bool json_contains(json &j, T t, U... u)
 {
     return json_contains(j, t) && json_contains(j, u...);
 }
 
+// 初期化
+class Initializer{
+public:
+    virtual int init() = 0;
+    virtual int term() = 0;
+};
+
+// Singletonインターフェース
 template <typename T>
-class Singleton
+class Singleton : public Initializer
 {
 protected:
     Singleton() {}
@@ -59,6 +70,10 @@ public:
         static T ins;
         return ins;
     }
+
+public:
+    virtual int init() = 0;
+    virtual int term() = 0;
 
 private:
     void operator=(const Singleton &other) {}

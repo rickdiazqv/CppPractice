@@ -25,7 +25,9 @@ public:
 
 public:
   int init() override;
+  int term() override;
 
 private:
   int process();
+  int term(int sock);
 };

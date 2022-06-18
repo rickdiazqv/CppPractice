@@ -54,6 +54,17 @@ int MessageManager::init()
   return 0;
 }
 
+int MessageManager::term()
+{
+  return wolfSSLMgr.term();
+}
+
+int MessageManager::term(int sock)
+{
+  // Close the connection to the client
+  return term() || close(sock);
+}
+
 void MessageManager::run()
 {
   while (process() == 0)
@@ -63,12 +74,15 @@ void MessageManager::run()
 
 int MessageManager::process()
 {
+  int ret = 0;
+
   // クライアントからの接続を待つ
   MessageConnection conn(this->sock);
   int sockClient = conn.connect();
   if (sockClient < 0)
   {
     LOGI << "failed to connect";
+    term(sockClient);
 
     return -1;
   }
@@ -81,12 +95,14 @@ int MessageManager::process()
          << saddr.sin_port;
   }
 
-  return wolfSSLMgr.process(sockClient);
+  ret = wolfSSLMgr.process(sockClient) || term(sockClient);
+
+  return ret;
 
   /*
   // クライアントからデータを受け取る
   MessageReceiver recv(sockClient);
-  string msg = recv.receive();
+  std::string msg = recv.receive();
   // デバッグ
   {
     sockaddr_in saddr = conn.getAddr();
