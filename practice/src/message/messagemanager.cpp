@@ -1,6 +1,8 @@
 #include "messagemanager.h"
 
-MessageManager::MessageManager() : wolfSSLMgr(WolfSSLManager::instance())
+MessageManager::MessageManager() : wolfSSLMgr(WolfSSLManager::instance()),
+                                   gameProc(GameProcessor::instance()),
+                                   sockClient(0)
 {
   // AF_INETを渡すことによりIPv4で通信する事を指定
   this->addr.sin_family = AF_INET;
@@ -16,11 +18,6 @@ MessageManager::~MessageManager()
 
 int MessageManager::init()
 {
-  static plog::ColorConsoleAppender<plog::TxtFormatter> consoleAppender;
-  static plog::RollingFileAppender<plog::TxtFormatter> fileAppender(LOG_PATH);
-
-  plog::init(plog::debug, &consoleAppender).addAppender(&fileAppender);
-
   LOGI << "MessageManager start init";
 
   wolfSSLMgr.init();
@@ -56,13 +53,16 @@ int MessageManager::init()
 
 int MessageManager::term()
 {
-  return wolfSSLMgr.term();
+  return term(this->sockClient);
 }
 
-int MessageManager::term(int sock)
+int MessageManager::term(int &sock)
 {
   // Close the connection to the client
-  return term() || close(sock);
+  int ret = wolfSSLMgr.term() || close(sock);
+  sock = 0;
+
+  return ret;
 }
 
 void MessageManager::run()
@@ -78,7 +78,7 @@ int MessageManager::process()
 
   // クライアントからの接続を待つ
   MessageConnection conn(this->sock);
-  int sockClient = conn.connect();
+  sockClient = conn.connect();
   if (sockClient < 0)
   {
     LOGI << "failed to connect";
@@ -95,14 +95,15 @@ int MessageManager::process()
          << saddr.sin_port;
   }
 
-  ret = wolfSSLMgr.process(sockClient) || term(sockClient);
+  uint8_t buff[MESSAGE_SIZE];
+  ret = wolfSSLMgr.process(sockClient, buff) || term(sockClient) || gameProc.regist(conn.getAddr(), buff);
 
   return ret;
 
   /*
   // クライアントからデータを受け取る
   MessageReceiver recv(sockClient);
-  std::string msg = recv.receive();
+  string msg = recv.receive();
   // デバッグ
   {
     sockaddr_in saddr = conn.getAddr();

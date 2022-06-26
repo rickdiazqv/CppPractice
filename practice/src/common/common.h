@@ -25,7 +25,14 @@ public:
     ~IpAddr();
 
 public:
-    std::string getAddr();
+    string getAddr();
+};
+
+// メッセージ
+struct SocketMessage
+{
+    sockaddr_in addr;
+    uint8_t buff[MESSAGE_SIZE];
 };
 
 // JSONキーの存在確認
@@ -50,7 +57,8 @@ bool json_contains(json &j, T t, U... u)
 }
 
 // 初期化
-class Initializer{
+class Initializer
+{
 public:
     virtual int init() = 0;
     virtual int term() = 0;
@@ -70,10 +78,6 @@ public:
         static T ins;
         return ins;
     }
-
-public:
-    virtual int init() = 0;
-    virtual int term() = 0;
 
 private:
     void operator=(const Singleton &other) {}

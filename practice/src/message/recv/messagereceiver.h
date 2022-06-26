@@ -11,5 +11,5 @@ public:
     int init() override;
 
 public:
-    std::string receive();
+    string receive();
 };

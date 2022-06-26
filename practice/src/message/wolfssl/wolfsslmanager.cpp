@@ -57,7 +57,7 @@ int WolfSSLManager::term()
     return 0;
 }
 
-int WolfSSLManager::process(int sock)
+int WolfSSLManager::process(int sock, uint8_t buff[])
 {
     WolfSSLCreator cre(ctx);
     WOLFSSL *ssl = cre.create(sock);
@@ -68,18 +68,10 @@ int WolfSSLManager::process(int sock)
     }
 
     WolfSSLReader read(ssl);
-    auto mes = read.read_bin();
-    int size = mes[0];
-    mes = std::vector<uint8_t>(mes.begin(), mes.begin() + size);
 
-    try
+    if (read.read_bin(buff) != 0)
     {
-        json j = json::from_bson(mes);
-        LOGI << j.dump();
-    }
-    catch (jexc e)
-    {
-        LOGW << e.what();
+        return -1;
     }
 
     return 0;

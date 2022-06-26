@@ -15,7 +15,7 @@ int EntryData::entry(json &j, sockaddr_in addr)
         return -1;
     }
 
-    std::string msgType = j[k_msgType].get<std::string>();
+    string msgType = j[k_msgType].get<string>();
 
     if (msgType != msgType_entry)
     {
@@ -30,7 +30,7 @@ int EntryData::entry(json &j, sockaddr_in addr)
     }
 
     // プレイヤーの登録
-    std::string name = mes[k_playerName].get<std::string>();
+    string name = mes[k_playerName].get<string>();
     in_addr_t ip = addr.sin_addr.s_addr;
     this->entries.emplace(ip, PlayerData(name, ip, addr.sin_port));
 

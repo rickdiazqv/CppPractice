@@ -24,5 +24,5 @@ protected:
 public:
     int init() override;
     int term() override;
-    int process(int sock);
+    int process(int sock, uint8_t buff[]);
 };

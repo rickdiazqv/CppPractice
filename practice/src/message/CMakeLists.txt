@@ -25,6 +25,7 @@ target_include_directories(
     ${MESSAGE_DIR}/conn
     ${MESSAGE_DIR}/send
     ${WOLFSSL_DIR}
+    ${GAME_DIR}
 )
 
 # ライブラリディレクトリを追加
@@ -32,6 +33,7 @@ target_link_directories(
     message
     PUBLIC
     ${COMMON_DIR}
+    ${GAME_DIR}
 )
 target_link_directories(
     msgmgr
@@ -64,4 +66,5 @@ target_link_libraries(
     msgmgr
     PUBLIC
     sslmgr
+    gmproc
 )

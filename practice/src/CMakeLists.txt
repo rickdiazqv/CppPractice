@@ -10,6 +10,7 @@ set(COMMON_DIR ${CMAKE_SOURCE_DIR}/common)
 set(QUE_DIR ${COMMON_DIR}/que)
 set(MESSAGE_DIR ${CMAKE_SOURCE_DIR}/message)
 set(WOLFSSL_DIR ${MESSAGE_DIR}/wolfssl)
+set(GAME_DIR ${CMAKE_SOURCE_DIR}/game)
 
 # 実行ファイルを作成
 add_executable(${PROJECT_NAME} main.cpp)
@@ -18,6 +19,7 @@ add_executable(${PROJECT_NAME} main.cpp)
 add_subdirectory(common)
 add_subdirectory(entry)
 add_subdirectory(message)
+add_subdirectory(game)
 
 # インクルードディレクトリを追加
 target_include_directories(

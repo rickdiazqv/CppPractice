@@ -12,5 +12,5 @@ public:
 
 public:
     std::string read();
-    std::vector<uint8_t> read_bin();
+    int read_bin(uint8_t buff[]);
 };
